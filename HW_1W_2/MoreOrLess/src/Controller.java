@@ -32,15 +32,12 @@ public class Controller {
 
          while (input == -1) {
              try {
-
                  input = Integer.parseInt(sc.nextLine());
-
              } catch (NumberFormatException e) {
                  view.printMessage(View.WRONG_VALUE);
                  view.printMessage(View.STEP, model.getLowEdge(), model.getTopEdge());
              }
          }
-
         return input;
     }
 

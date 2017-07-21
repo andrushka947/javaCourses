@@ -1,4 +1,3 @@
-import java.util.Random;
 
 public class Model {
 
@@ -6,6 +5,7 @@ public class Model {
     private int max;
     private int lowEdge;
     private int topEdge;
+    private int randomValue;
 
     Model(){
         this.min = 0;
@@ -13,15 +13,6 @@ public class Model {
         lowEdge = min;
         topEdge = max;
     }
-
-    public Model(int min, int max) {
-        this.min = min;
-        this.max = max;
-        lowEdge = min;
-        topEdge = max;
-    }
-
-    private int randomValue;
 
     public int getRandomValue() {
         return randomValue;
