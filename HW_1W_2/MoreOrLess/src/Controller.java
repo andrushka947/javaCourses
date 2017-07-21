@@ -11,7 +11,6 @@ public class Controller {
     }
 
     public void play(int from, int to){
-		
         Scanner sc = new Scanner(System.in);
 
         model.setMin(from);
@@ -30,6 +29,7 @@ public class Controller {
 
     private int inputNumberFromConsole(Scanner sc) {
          int input = -1;
+
          while (input == -1) {
              try {
                  input = Integer.parseInt(sc.nextLine());
