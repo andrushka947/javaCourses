@@ -11,6 +11,7 @@ public class Controller {
     }
 
     public void play(int from, int to){
+		
         Scanner sc = new Scanner(System.in);
 
         model.setMin(from);
