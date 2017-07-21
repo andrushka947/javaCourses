@@ -29,7 +29,7 @@ public class Controller {
 
     private int inputNumberFromConsole(Scanner sc) {
          int input = -1;
-
+		 System.out.println("git test");
          while (input == -1) {
              try {
                  input = Integer.parseInt(sc.nextLine());
