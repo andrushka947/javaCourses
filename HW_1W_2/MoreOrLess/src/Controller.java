@@ -22,7 +22,7 @@ public class Controller {
         int inputNumber;
         do {
             inputNumber = inputNumberFromConsole(sc);
-        } while (!compareAndUpdateEdges(inputNumber)) ;
+        } while (!compareNumberAndUpdateEdges(inputNumber)) ;
 
         view.printMessage(View.SUCCESS, model.getRandomValue());
         view.printAllInputValues(model.getInputNumbers());
@@ -42,7 +42,7 @@ public class Controller {
         return input;
     }
 
-    private boolean compareAndUpdateEdges(int number) {
+    private boolean compareNumberAndUpdateEdges(int number) {
         if (!isInRange(number)) {
             view.printMessage(View.OUT_OF_RANGE);
             view.printMessage(View.STEP, model);
