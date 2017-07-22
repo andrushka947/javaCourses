@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.List;
+
 public class View {
 
     public static String RULES = "The computer made a number between %s and %s. You have to guess it!";
@@ -11,12 +14,18 @@ public class View {
     public void printMessage(String message) {
         System.out.println(message);
     }
+
     public void printMessage(String message, int number) {
-        System.out.printf(message, number);
+        System.out.printf(message, number + "\n");
     }
-    public void printMessage (String message, int from, int to) {
-        System.out.printf(message, from, to);
+
+    public void printMessage (String message, Model model) {
+        System.out.printf(message, model.getLowEdge(), model.getTopEdge());
         System.out.println();
+    }
+
+    public void printAllInputValues(List<Integer>list){
+        System.out.println("Your input values: " +  Arrays.deepToString(list.toArray()));;
     }
 
 }

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class Model {
 
@@ -6,6 +8,7 @@ public class Model {
     private int lowEdge;
     private int topEdge;
     private int randomValue;
+    private List<Integer> inputNumbers = new ArrayList<>();
 
     Model(){
         this.min = 0;
@@ -53,6 +56,18 @@ public class Model {
 
     public void setTopEdge(int topEdge) {
         this.topEdge = topEdge;
+    }
+
+    public void setRandomValue(int randomValue) {
+        this.randomValue = randomValue;
+    }
+
+    public List<Integer> getInputNumbers() {
+        return inputNumbers;
+    }
+
+    public void setInputNumbers(List<Integer> inputNumbers) {
+        this.inputNumbers = inputNumbers;
     }
 
 }

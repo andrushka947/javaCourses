@@ -1,4 +1,3 @@
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Controller {
@@ -18,13 +17,15 @@ public class Controller {
         model.setMax(to);
         model.setTopEdge(to);
         model.setRandomValue();
-        view.printMessage(View.RULES, from, to);
+        view.printMessage(View.RULES, model);
 
         int inputNumber;
         do {
             inputNumber = inputNumberFromConsole(sc);
         } while (!compareAndUpdateEdges(inputNumber)) ;
 
+        view.printMessage(View.SUCCESS, model.getRandomValue());
+        view.printAllInputValues(model.getInputNumbers());
     }
 
     private int inputNumberFromConsole(Scanner sc) {
@@ -35,7 +36,7 @@ public class Controller {
                  input = Integer.parseInt(sc.nextLine());
              } catch (NumberFormatException e) {
                  view.printMessage(View.WRONG_VALUE);
-                 view.printMessage(View.STEP, model.getLowEdge(), model.getTopEdge());
+                 view.printMessage(View.STEP, model);
              }
          }
         return input;
@@ -44,27 +45,29 @@ public class Controller {
     private boolean compareAndUpdateEdges(int number) {
         if (!isInRange(number)) {
             view.printMessage(View.OUT_OF_RANGE);
-            view.printMessage(View.STEP, model.getLowEdge(), model.getTopEdge());
+            view.printMessage(View.STEP, model);
             return false;
+        }
+        if (number == model.getRandomValue()) {
+            model.getInputNumbers().add(number);
+            return true;
         }
         if (number > model.getRandomValue()) {
             model.setTopEdge(number);
-            view.printMessage(View.SMALLER_VALUE, model.getLowEdge(), model.getTopEdge());
-            return false;
-        }
-        else if (number < model.getRandomValue()) {
-            model.setLowEdge(number);
-            view.printMessage(View.BIGGER_VALUE, model.getLowEdge(), model.getTopEdge());
+            model.getInputNumbers().add(number);
+            view.printMessage(View.SMALLER_VALUE, model);
             return false;
         }
         else {
-            view.printMessage(View.SUCCESS, number);
-            return true;
+            model.setLowEdge(number);
+            model.getInputNumbers().add(number);
+            view.printMessage(View.BIGGER_VALUE, model);
+            return false;
         }
     }
 
     private boolean isInRange(int number) {
-        return number >= model.getLowEdge() && number <= model.getTopEdge();
+        return number > model.getLowEdge() && number < model.getTopEdge();
     }
 
     public Model getModel() {
