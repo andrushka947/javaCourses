@@ -1,3 +1,4 @@
+
 public class Main {
     public static void main(String[] args) {
 
@@ -5,7 +6,7 @@ public class Main {
         View view = new View();
 
         Controller controller = new Controller(model, view);
-        controller.play(0, 100);
+        controller.play();
 
     }
 }

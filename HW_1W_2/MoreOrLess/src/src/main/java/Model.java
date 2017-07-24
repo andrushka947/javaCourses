@@ -58,16 +58,16 @@ public class Model {
         this.topEdge = topEdge;
     }
 
-    public void setRandomValue(int randomValue) {
-        this.randomValue = randomValue;
-    }
-
     public List<Integer> getInputNumbers() {
         return inputNumbers;
     }
 
     public void setInputNumbers(List<Integer> inputNumbers) {
         this.inputNumbers = inputNumbers;
+    }
+
+    public void setRandomValue(int value) {
+        this.randomValue = value;
     }
 
 }

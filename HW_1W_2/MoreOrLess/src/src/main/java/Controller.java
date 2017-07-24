@@ -9,14 +9,12 @@ public class Controller {
         this.view = view;
     }
 
-    public void play(int from, int to){
+    public void play(){
         Scanner sc = new Scanner(System.in);
-
-        model.setMin(from);
-        model.setLowEdge(from);
-        model.setMax(to);
-        model.setTopEdge(to);
+        model.setMin(0);
+        model.setMax(100);
         model.setRandomValue();
+        
         view.printMessage(View.RULES, model);
 
         int inputNumber;
@@ -28,9 +26,8 @@ public class Controller {
         view.printAllInputValues(model.getInputNumbers());
     }
 
-    private int inputNumberFromConsole(Scanner sc) {
+    public int inputNumberFromConsole(Scanner sc) {
          int input = -1;
-
          while (input == -1) {
              try {
                  input = Integer.parseInt(sc.nextLine());
@@ -42,7 +39,7 @@ public class Controller {
         return input;
     }
 
-    private boolean compareNumberAndUpdateEdges(int number) {
+    public boolean compareNumberAndUpdateEdges(int number) {
         if (!isInRange(number)) {
             view.printMessage(View.OUT_OF_RANGE);
             view.printMessage(View.STEP, model);
@@ -66,7 +63,7 @@ public class Controller {
         }
     }
 
-    private boolean isInRange(int number) {
+    public boolean isInRange(int number) {
         return number > model.getLowEdge() && number < model.getTopEdge();
     }
 
