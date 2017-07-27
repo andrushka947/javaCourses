@@ -62,7 +62,7 @@ public class main {
         bouquet2.setStem(BouquetStem.LONG_STEM);
         bouquet2.setPrice(BouquetPrice.BUDGET);
 
-        View.print(bouquet1);
+        View.print(bouquet2);
 
     }
 }
