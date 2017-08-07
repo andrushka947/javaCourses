@@ -15,6 +15,6 @@ public class VectorAdapterFromRaster2 implements VectorGraphicInterface {
 
     @Override
     public void drawSquare() {
-        rg.drowRasterSquare();
+        rg.drawRasterSquare();
     }
 }
