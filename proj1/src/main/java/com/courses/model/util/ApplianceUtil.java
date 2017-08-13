@@ -86,7 +86,4 @@ public class ApplianceUtil {
         return appliances;
     }
 
-    public void plugIn(int id) {
-        appliances.get(id).changeState();
-    }
 }
