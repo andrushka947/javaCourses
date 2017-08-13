@@ -16,7 +16,6 @@ public class ApplianceEdit extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("id"));
         applianceUtil.getAppliances().get(id).changeState();
 
-        System.out.println("id : " + id + " changed : " + applianceUtil.getAppliances().get(id).isPluggedIn());
         resp.sendRedirect("/");
     }
 }
