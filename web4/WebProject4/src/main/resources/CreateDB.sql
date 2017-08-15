@@ -4,10 +4,17 @@ DROP TABLE IF EXISTS Faculties;
 DROP TABLE IF EXISTS Subjects;
 DROP TABLE IF EXISTS Faculties_Subjects;
 
+CREATE TABLE Roles (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name ENUM ('GUEST',
+             'USER',
+             'ADMIN')
+);
+
 
 CREATE TABLE Faculties(
   id                  INT NOT NULL PRIMARY KEY,
-  name                VARCHAR(20) NOT NULL UNIQUE ,
+  name                VARCHAR(33) NOT NULL UNIQUE ,
   shortName           VARCHAR(20) NOT NULL,
   studentsToAccept    INT NOT NULL,
   markToAdmission     INT NOT NULL
@@ -28,6 +35,8 @@ CREATE TABLE Applicants(
   id                  INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   login               VARCHAR(30) NOT NULL UNIQUE ,
   password            VARCHAR(40) NOT NULL,
+
+  role_id             INT REFERENCES Roles(id),
   name                VARCHAR(30) NOT NULL,
   surname             VARCHAR(30) NOT NULL,
   secondName          VARCHAR(30) NOT NULL,
@@ -40,21 +49,26 @@ CREATE TABLE Applicants(
 );
 
 CREATE TABLE ApplicantSubjectsAndMarks (
-    id          INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    score       INT,
-    name        ENUM(   'MATH',
-                        'UKRAINIAN_HISTORY',
-                        'CHEMISTRY',
-                        'PHYSICS',
-                        'UKRAINIAN_LANGUAGE',
-                        'ENGLISH_LANGUAGE',
-                        'GEOGRAPHY',
-                        'BIOLOGY'),
-    applicant_id     INT,
-    subject_id  INT,
-    FOREIGN KEY (applicant_id) REFERENCES Applicants(id) ON UPDATE NO ACTION,
-    FOREIGN KEY (subject_id) REFERENCES Subjects(id) ON UPDATE NO ACTION
+    id            INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    score         INT,
+    name          ENUM(   'MATH',
+                          'UKRAINIAN_HISTORY',
+                          'CHEMISTRY',
+                          'PHYSICS',
+                          'UKRAINIAN_LANGUAGE',
+                          'ENGLISH_LANGUAGE',
+                          'GEOGRAPHY',
+                          'BIOLOGY'),
+    applicant_id  INT,
+    subject_id    INT,
+    FOREIGN KEY   (applicant_id) REFERENCES Applicants(id) ON UPDATE NO ACTION,
+    FOREIGN KEY   (subject_id) REFERENCES Subjects(id) ON UPDATE NO ACTION
 );
+
+INSERT INTO Subjects (id, name) VALUES
+  (1, 'GUEST'),
+  (2, 'USER'),
+  (3, 'ADMIN');
 
 INSERT INTO Subjects (id, name) VALUES
   (1, 'MATH'),
@@ -74,21 +88,21 @@ INSERT INTO Faculties (id, name, shortName, studentsToAccept, markToAdmission) V
   (5, 'Engineering Faculty', 'ef', 15, 610),
   (6, 'Psychology Faculty', 'pf', 20, 570);
 
-INSERT INTO Applicants (login, password, name, surname, secondName, email,
+INSERT INTO Applicants (login, password,role_id, name, surname, secondName, email,
                         phoneNumber, faculty_id, certificateScore, overallScore) VALUES
-  ('Andrukha', 'd56b699830e77ba53855679cb1d252da', 'Andrey', 'Andreyev', 'Andreevich', 'andrey@mail.com', '+38(000)000-00-01', 1, 54, 567),
-  ('Sanya', 'd56b699830e77ba53855679cb1d252da', 'Aleksandr', 'Aleksandrov', 'Aleksandrovich', 'aleksandr@mail.com', '+38(000)000-00-01', 2, 54, 425),
-  ('Olya', 'd56b699830e77ba53855679cb1d252da', 'Olga', 'Olgova', 'Olgovna', 'Olga@mail.com', '+38(000)000-00-02', 3, 51, 569),
-  ('Jeka', 'd56b699830e77ba53855679cb1d252da', 'Evgeniy', 'Yevgenov', 'Yevgenyevich', 'Yevgen@mail.com', '+38(000)000-00-03', 4, 30, 501),
-  ('Vasyan', 'd56b699830e77ba53855679cb1d252da', 'Vasiliy', 'Vasilyev', 'Vasilyevich', 'Vasiliy@mail.com', '+38(000)000-00-04', 5, 44, 487),
-  ('Varukha', 'd56b699830e77ba53855679cb1d252da', 'Varvara', 'VAravarova', 'Varvarovna', 'Varvara@mail.com', '+38(000)000-00-05', 6, 60, 470),
-  ('Seryoga', 'd56b699830e77ba53855679cb1d252da', 'Sergey', 'Sergeev', 'Sergeevich', 'Sergey@mail.com', '+38(000)000-00-06', 1, 40, 515),
-  ('Anka', 'd56b699830e77ba53855679cb1d252da', 'Anna', 'Annina', 'Annovna', 'Anna@mail.com', '+38(000)000-00-07', 2, 34, 539),
-  ('Afonya', 'd56b699830e77ba53855679cb1d252da', 'Afanasiy', 'Afanasiev', 'Afanasievich', 'Afanasiy@mail.com', '+38(000)000-00-08', 3, 44, 505),
-  ('Yulyan', 'd56b699830e77ba53855679cb1d252da', 'Yulia', 'Yulieva', 'Yulievna', 'Yulia@mail.com', '+38(000)000-00-09', 4, 20, 452),
-  ('Vladyan', 'd56b699830e77ba53855679cb1d252da', 'Vladislav', 'Vladov', 'Vladislavovich', 'Vladislav@mail.com', '+38(000)000-00-10', 5, 49, 490),
-  ('Efrosya', 'd56b699830e77ba53855679cb1d252da', 'Efrosiniya', 'Efrosieva', 'Efrosineva', 'Efrosineva@mail.com', '+38(000)000-00-11', 6, 54, 545),
-  ('Garry', 'd56b699830e77ba53855679cb1d252da', 'Gennadiy', 'Genov', 'Genadiyovich', 'Gennadiy@mail.com', '+38(000)000-00-11', 6, 47, 518);
+  ('Andrukha', 'd56b699830e77ba53855679cb1d252da', 2, 'Andrey', 'Andreyev', 'Andreevich', 'andrey@mail.com', '+38(000)000-00-01', 1, 54, 567),
+  ('Sanya', 'd56b699830e77ba53855679cb1d252da', 2, 'Aleksandr', 'Aleksandrov', 'Aleksandrovich', 'aleksandr@mail.com', '+38(000)000-00-01', 2, 54, 425),
+  ('Olya', 'd56b699830e77ba53855679cb1d252da', 2, 'Olga', 'Olgova', 'Olgovna', 'Olga@mail.com', '+38(000)000-00-02', 3, 51, 569),
+  ('Jeka', 'd56b699830e77ba53855679cb1d252da', 2, 'Evgeniy', 'Yevgenov', 'Yevgenyevich', 'Yevgen@mail.com', '+38(000)000-00-03', 4, 30, 501),
+  ('Vasyan', 'd56b699830e77ba53855679cb1d252da', 2, 'Vasiliy', 'Vasilyev', 'Vasilyevich', 'Vasiliy@mail.com', '+38(000)000-00-04', 5, 44, 487),
+  ('Varukha', 'd56b699830e77ba53855679cb1d252da', 2, 'Varvara', 'VAravarova', 'Varvarovna', 'Varvara@mail.com', '+38(000)000-00-05', 6, 60, 470),
+  ('Seryoga', 'd56b699830e77ba53855679cb1d252da', 2, 'Sergey', 'Sergeev', 'Sergeevich', 'Sergey@mail.com', '+38(000)000-00-06', 1, 40, 515),
+  ('Anka', 'd56b699830e77ba53855679cb1d252da', 2, 'Anna', 'Annina', 'Annovna', 'Anna@mail.com', '+38(000)000-00-07', 2, 34, 539),
+  ('Afonya', 'd56b699830e77ba53855679cb1d252da', 2, 'Afanasiy', 'Afanasiev', 'Afanasievich', 'Afanasiy@mail.com', '+38(000)000-00-08', 3, 44, 505),
+  ('Yulyan', 'd56b699830e77ba53855679cb1d252da', 2, 'Yulia', 'Yulieva', 'Yulievna', 'Yulia@mail.com', '+38(000)000-00-09', 4, 20, 452),
+  ('Vladyan', 'd56b699830e77ba53855679cb1d252da', 2, 'Vladislav', 'Vladov', 'Vladislavovich', 'Vladislav@mail.com', '+38(000)000-00-10', 5, 49, 490),
+  ('Efrosya', 'd56b699830e77ba53855679cb1d252da', 2, 'Efrosiniya', 'Efrosieva', 'Efrosineva', 'Efrosineva@mail.com', '+38(000)000-00-11', 6, 54, 545),
+  ('Garry', 'd56b699830e77ba53855679cb1d252da', 2, 'Gennadiy', 'Genov', 'Genadiyovich', 'Gennadiy@mail.com', '+38(000)000-00-11', 6, 47, 518);
 
 INSERT INTO Faculties_Subjects (faculty_id, subject_id) VALUES
   (1, 1),

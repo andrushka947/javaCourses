@@ -9,13 +9,14 @@ public class Applicant extends Entity {
     private int id;
     private String login;
     private String password;
+    private User_Role role;
     private String name;
     private String surname;
     private String secondName;
 
     private String email;
     private String phoneNumber;
-    private Faculty appliedFor;
+    private Faculty faculty;
     private Map<Subject,Integer> subjectMarks;
     private int certificateScore;
     private int overallScore;
@@ -35,6 +36,10 @@ public class Applicant extends Entity {
         }
         public Builder setPassword(String pass) {
             Applicant.this.password = pass;
+            return this;
+        }
+        public Builder setRole(User_Role role) {
+            Applicant.this.role = role;
             return this;
         }
         public Builder setName(String name) {
@@ -58,7 +63,7 @@ public class Applicant extends Entity {
             return this;
         }
         public Builder setAppliedFor(Faculty appliedFor) {
-            Applicant.this.appliedFor = appliedFor;
+            Applicant.this.faculty = appliedFor;
             return this;
         }
         public Builder setSubjectMarks(Map<Subject, Integer> subjectsAndMarks) {
@@ -89,7 +94,7 @@ public class Applicant extends Entity {
     }
 
     private String facultyPrint() {
-        return "{" + "Name:" + appliedFor.getName() + "}";
+        return "{" + "Name:" + faculty.getName() + "}";
     }
 
     public int getId() {
@@ -114,6 +119,14 @@ public class Applicant extends Entity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public User_Role getRole() {
+        return role;
+    }
+
+    public void setRole(User_Role role) {
+        this.role = role;
     }
 
     public String getName() {
@@ -156,12 +169,12 @@ public class Applicant extends Entity {
         this.phoneNumber = phoneNumber;
     }
 
-    public Faculty getAppliedFor() {
-        return appliedFor;
+    public Faculty getFaculty() {
+        return faculty;
     }
 
-    public void setAppliedFor(Faculty appliedFor) {
-        this.appliedFor = appliedFor;
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 
     public Map<Subject, Integer> getSubjectMarks() {
@@ -185,7 +198,7 @@ public class Applicant extends Entity {
         this.subjectMarks = subjectMarks;
         int overallScore = 0;
         for (Map.Entry pair : subjectMarks.entrySet()) {
-            if (appliedFor.getSubjectsToPass().contains(pair.getKey())) {
+            if (faculty.getSubjectsToPass().contains(pair.getKey())) {
                 overallScore += (Integer) pair.getValue();
             }
         }
@@ -211,7 +224,7 @@ public class Applicant extends Entity {
         if (!secondName.equals(applicant.secondName)) return false;
         if (!email.equals(applicant.email)) return false;
         if (!phoneNumber.equals(applicant.phoneNumber)) return false;
-        if (appliedFor != null ? !appliedFor.equals(applicant.appliedFor) : applicant.appliedFor != null) return false;
+        if (faculty != null ? !faculty.equals(applicant.faculty) : applicant.faculty != null) return false;
         return subjectMarks != null ? subjectMarks.equals(applicant.subjectMarks) : applicant.subjectMarks == null;
     }
 
@@ -225,7 +238,7 @@ public class Applicant extends Entity {
         result = 31 * result + secondName.hashCode();
         result = 31 * result + email.hashCode();
         result = 31 * result + phoneNumber.hashCode();
-        result = 31 * result + (appliedFor != null ? appliedFor.hashCode() : 0);
+        result = 31 * result + (faculty != null ? faculty.hashCode() : 0);
         result = 31 * result + (subjectMarks != null ? subjectMarks.hashCode() : 0);
         return result;
     }
@@ -241,7 +254,7 @@ public class Applicant extends Entity {
                 ", secondName='" + secondName + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", appliedFor=" + facultyPrint() +
+                ", faculty=" + facultyPrint() +
                 ", subjectMarks=" + subjectMarks +
                 ", certificateScore=" + certificateScore +
                 ", overallScore=" + overallScore +
